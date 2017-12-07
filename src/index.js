@@ -1,11 +1,12 @@
-/*!
+/**
  * MediaQuery
  *
  * @author Christian Sany
  * @copyright Unic AG
  */
-import observer from './index';
-import debounce from 'debounce';
+
+import observer from '@unic/composite-observer/dist/observer';
+import throttle from 'raf-throttle';
 
 // Bootstrap breakpoints are the default
 export const defaultConfig = [
@@ -30,6 +31,9 @@ export const defaultConfig = [
 // Factory createMediaQueryHandler
 export default (config = defaultConfig) => {
   const instance = {};
+
+  // Sort config in place, in case it was provided in false order
+  config.sort((a, b) => a.minWidth - b.minWidth);
 
   const state = {
     width: 0,
@@ -58,15 +62,15 @@ export default (config = defaultConfig) => {
 
     // Check silent option and if brakpoint changed
     if (!silent && state.breakpoint !== oldState.breakpoint) {
-      state.trigger('change', oldState, state); // Trigger change event
+      instance.trigger('change', oldState, state); // Trigger change event
     }
   };
 
   // TODO: maybe refactor as throttle and not debounce
-  const resizeHandler = debounce(() => {
+  const resizeHandler = throttle(() => {
     setState();
-    state.trigger('resize', state); // Trigger resize event
-  }, 100);
+    instance.trigger('resize', state); // Trigger resize event
+  });
 
   /**
    * Event listeners initialisation
@@ -88,6 +92,27 @@ export default (config = defaultConfig) => {
    * Return state object that is decoupled from internal state
    */
   instance.getState = () => Object.assign({}, state);
+
+  /**
+   * Match the current breakpoint with given breakpoint or array of breakpoints
+   * @param {String|Array} match - The desired match/matches that should be checked for
+   * @return {Boolean} - Returns treu if current breakpoint is maching any given breakpoint
+   */
+  instance.match = match => {
+    if (!match) {
+      throw new Error('match() expected one parameter.');
+    }
+
+    if (typeof match === 'string') {
+      return match === state.breakpoint;
+    } else if (Array.isArray(match)) {
+      return match.includes(state.breakpoint);
+    }
+
+    throw new Error(
+      'sorry man, it seems your given value is neither of type string nor is it an array.',
+    );
+  };
 
   /**
    * Unbind events, remove data, custom teardown

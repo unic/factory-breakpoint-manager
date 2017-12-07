@@ -1,0 +1,80 @@
+{
+  "name": "@unic/factory-media-query-handler",
+  "version": "0.0.0",
+  "description": "Lightweight media query helper",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "ava --watch",
+    "lint": "lint-staged",
+    "build": "webpack",
+    "precommit": "npm run lint && npm test && npm run build && git add -A dist",
+    "preversion": "npm run lint && npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags",
+    "test": "ava"
+  },
+  "main": "dist/factory-media-query-handler.js",
+  "module": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unic/factory-media-query-handler.git"
+  },
+  "keywords": ["composite", "factory-media-query-handler"],
+  "author": "Christian Sany",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/unic/factory-media-query-handler/issues"
+  },
+  "homepage": "https://github.com/unic/factory-media-query-handler#readme",
+  "devDependencies": {
+    "ava": "0.21.0",
+    "babel-cli": "6.24.1",
+    "babel-loader": "7.1.2",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-preset-env": "1.6.1",
+    "eslint": "4.3.0",
+    "eslint-config-airbnb-base": "11.3.1",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-prettier": "2.3.1",
+    "husky": "0.14.3",
+    "lint-staged": "6.0.0",
+    "prettier": "1.9.1",
+    "webpack": "3.10.0"
+  },
+  "lint-staged": {
+    "*.js": ["eslint --fix", "git add"],
+    "*.json": ["prettier --write", "git add"]
+  },
+  "eslintConfig": {
+    "extends": ["airbnb-base", "prettier"],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "printWidth": 90,
+          "trailingComma": "all"
+        }
+      ]
+    },
+    "plugins": ["prettier"]
+  },
+  "ava": {
+    "files": ["src/**/*.spec.js"],
+    "source": ["src/**/*.js"],
+    "concurrency": 5,
+    "failFast": true,
+    "powerAssert": true,
+    "require": ["babel-register"],
+    "babel": "inherit"
+  },
+  "dependencies": {
+    "@unic/composite-observer": "0.0.6",
+    "raf-throttle": "2.0.3"
+  }
+}
