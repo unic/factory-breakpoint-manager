@@ -104,9 +104,9 @@ export default (config = defaultConfig) => {
     }
 
     if (typeof match === 'string') {
-      return match === state.breakpoint;
+      return match === state.breakpoint.name;
     } else if (Array.isArray(match)) {
-      return match.includes(state.breakpoint);
+      return match.includes(state.breakpoint.name);
     }
 
     throw new Error(
