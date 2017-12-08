@@ -1,5 +1,5 @@
 /**
- * MediaQuery
+ * BreakpointManager
  *
  * @author Christian Sany
  * @copyright Unic AG
@@ -47,10 +47,9 @@ export default (config = defaultConfig) => {
   // **Private functions**
 
   /**
-   * TODO
-   * @param {Boolean} silent - TODO
+   * Set the new state
    */
-  const setState = (silent = false) => {
+  const setState = () => {
     const oldState = Object.assign({}, state); // Cache old state
 
     const width = window.innerWidth;
@@ -61,12 +60,14 @@ export default (config = defaultConfig) => {
     state.breakpoint = matchingBreakpoints[matchingBreakpoints.length - 1]; // Last matching entry
 
     // Check silent option and if brakpoint changed
-    if (!silent && state.breakpoint !== oldState.breakpoint) {
+    if (state.breakpoint.name !== oldState.breakpoint.name) {
       instance.trigger('change', oldState, state); // Trigger change event
     }
   };
 
-  // TODO: maybe refactor as throttle and not debounce
+  /**
+   * Throttled resize handler
+   */
   const resizeHandler = throttle(() => {
     setState();
     instance.trigger('resize', state); // Trigger resize event
@@ -96,9 +97,9 @@ export default (config = defaultConfig) => {
   /**
    * Match the current breakpoint with given breakpoint or array of breakpoints
    * @param {String|Array} match - The desired match/matches that should be checked for
-   * @return {Boolean} - Returns treu if current breakpoint is maching any given breakpoint
+   * @return {Boolean} - Returns true if current breakpoint is maching any given breakpoint
    */
-  instance.match = match => {
+  instance.matches = match => {
     if (!match) {
       throw new Error('match() expected one parameter.');
     }
@@ -110,7 +111,7 @@ export default (config = defaultConfig) => {
     }
 
     throw new Error(
-      'sorry man, it seems your given value is neither of type string nor is it an array.',
+      'Sorry man, it seems your given value is neither of type string nor is it an array.',
     );
   };
 
@@ -126,8 +127,8 @@ export default (config = defaultConfig) => {
 
   initEventListeners();
 
-  // Set initial state in silence mode (even though noone could be subscribed at this point)
-  setState(true);
+  // Set initial state
+  setState();
 
   return instance; // Expose instance
 };

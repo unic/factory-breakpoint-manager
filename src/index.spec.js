@@ -1,14 +1,6 @@
 import test from 'ava';
-// import factoryMediaQueryHandler from './index';
+// import breakpointManager from './index';
 
-test('factoryMediaQueryHandler is executed without failing', t => {
-  // t.notThrows(() =>
-  //   factoryMediaQueryHandler([
-  //     {
-  //       name: 'xs',
-  //       minWidth: 0,
-  //     },
-  //   ]),
-  // );
+test('breakpointManager is executed without failing', t => {
   t.pass();
 });

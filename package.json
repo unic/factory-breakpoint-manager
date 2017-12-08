@@ -1,7 +1,7 @@
 {
-  "name": "@unic/factory-media-query-handler",
+  "name": "@unic/factory-breakpoint-manager",
   "version": "0.0.0",
-  "description": "Lightweight media query helper",
+  "description": "Lightweight breakpoint manager",
   "scripts": {
     "start": "npm run dev",
     "dev": "ava --watch",
@@ -13,19 +13,19 @@
     "postversion": "git push && git push --tags",
     "test": "ava"
   },
-  "main": "dist/factory-media-query-handler.js",
+  "main": "dist/factory-breakpoint-manager.js",
   "module": "./src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/unic/factory-media-query-handler.git"
+    "url": "git+https://github.com/unic/factory-breakpoint-manager.git"
   },
-  "keywords": ["composite", "factory-media-query-handler"],
+  "keywords": ["factory", "breakpoint-manager"],
   "author": "Christian Sany",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/unic/factory-media-query-handler/issues"
+    "url": "https://github.com/unic/factory-breakpoint-manager/issues"
   },
-  "homepage": "https://github.com/unic/factory-media-query-handler#readme",
+  "homepage": "https://github.com/unic/factory-breakpoint-manager#readme",
   "devDependencies": {
     "ava": "0.21.0",
     "babel-cli": "6.24.1",
