@@ -76,7 +76,7 @@ Having to write your Breakpoints directly into your JS can be a real hazard to m
 BreakpointManager has own functionality and functionality provided by included composites.
 
 **Factory**
-[createBreakpointManager(config)](#factory)
+[createBreakpointManager(options)](#factory)
 
 **Own methods**
 * [getState()](#getstate)
@@ -95,9 +95,9 @@ Create a new instance of a BreakpointManager
 
 **Returns**: <code>Object</code> - BreakpointManager
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| options | <code>Object</code> |  | Custom options |
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Custom options |
 
 **Example**
 ```js
