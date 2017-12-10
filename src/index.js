@@ -5,39 +5,29 @@
  * @copyright Unic AG
  */
 
-import observer from '@unic/composite-observer/dist/observer';
+import observer from '@unic/composite-observer';
 import throttle from 'raf-throttle';
 
-// Bootstrap breakpoints are the default
-export const defaultConfig = [
-  {
-    name: 'xs',
-    minWidth: 0, // in pixel
-  },
-  {
-    name: 'sm',
-    minWidth: 768, // in pixel
-  },
-  {
-    name: 'md',
-    minWidth: 992, // in pixel
-  },
-  {
-    name: 'lg',
-    minWidth: 1200, // in pixel
-  },
-];
+const defaultBreakpoints = {
+  xs: 0,
+  sm: 768,
+  md: 992,
+  lg: 1200,
+};
 
-// Factory createMediaQueryHandler
-export default (config = defaultConfig) => {
+// Factory createBreakpointManager
+export default ({ breakpoints = defaultBreakpoints, unit = 'px' } = {}) => {
   const instance = {};
-
-  // Sort config in place, in case it was provided in false order
-  config.sort((a, b) => a.minWidth - b.minWidth);
+  breakpoints = Object.entries(breakpoints) // eslint-disable-line
+    .map(([key, val]) => ({
+      name: key,
+      minWidth: val,
+    }))
+    .sort((a, b) => a.minWidth - b.minWidth);
 
   const state = {
     width: 0,
-    breakpoint: config[0].name,
+    breakpoint: breakpoints[0].name,
   };
 
   // **Composition**
@@ -47,13 +37,30 @@ export default (config = defaultConfig) => {
   // **Private functions**
 
   /**
+   * Get the window with depending on the unit
+   * @return {Integer/Float}
+   */
+  const getWindowWidth = () => {
+    switch (unit) {
+      case 'px':
+        return window.innerWidth;
+      case 'em':
+        return (
+          window.innerWidth / parseFloat(window.getComputedStyle(document.body).fontSize)
+        );
+      default:
+        throw new Error('Please provide either px or em as unit');
+    }
+  };
+
+  /**
    * Set the new state
    */
   const setState = () => {
     const oldState = Object.assign({}, state); // Cache old state
 
-    const width = window.innerWidth;
-    const matchingBreakpoints = config.filter(bp => width >= bp.minWidth);
+    const width = getWindowWidth(); // window.innerWidth;
+    const matchingBreakpoints = breakpoints.filter(bp => width >= bp.minWidth);
 
     // Assign new state values
     state.width = width;

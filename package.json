@@ -7,19 +7,18 @@
     "dev": "ava --watch",
     "lint": "lint-staged",
     "build": "webpack",
-    "precommit": "npm run lint && npm test && npm run build && git add -A dist",
+    "precommit": "npm run lint",
     "preversion": "npm run lint && npm test",
     "version": "npm run build && git add -A dist",
     "postversion": "git push && git push --tags",
     "test": "ava"
   },
   "main": "dist/factory-breakpoint-manager.js",
-  "module": "./src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/unic/factory-breakpoint-manager.git"
   },
-  "keywords": ["factory", "breakpoint-manager"],
+  "keywords": ["factory", "breakpoint-manager", "breakpoints", "mediaquery"],
   "author": "Christian Sany",
   "license": "Apache-2.0",
   "bugs": {
@@ -74,7 +73,7 @@
     "babel": "inherit"
   },
   "dependencies": {
-    "@unic/composite-observer": "0.0.6",
+    "@unic/composite-observer": "0.0.8",
     "raf-throttle": "2.0.3"
   }
 }
