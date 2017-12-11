@@ -20,7 +20,6 @@ const createBreakpointManager = require('@unic/factory-breakpoint-manager').defa
 
 ## Usage/Quickstart
 
-**Examples**
 ```js
 import createBreakpointManager from '@unic/factory-breakpoint-manager';
 
@@ -111,7 +110,7 @@ const BreakpointManager = createBreakpointManager({
   unit: 'px'
 });
 
-// Or
+// Or go with em as a unit
 
 const BreakpointManager = createBreakpointManager({
   breakpoints: {
