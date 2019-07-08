@@ -1,6 +1,6 @@
 {
   "name": "@unic/factory-breakpoint-manager",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Lightweight breakpoint manager",
   "scripts": {
     "start": "npm run dev",
