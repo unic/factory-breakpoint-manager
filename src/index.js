@@ -43,10 +43,10 @@ export default ({ breakpoints = defaultBreakpoints, unit = 'px' } = {}) => {
   const getWindowWidth = () => {
     switch (unit) {
       case 'px':
-        return document.body.offsetWidth;
+        return document.documentElement.clientWidth;
       case 'em':
         return (
-          document.body.offsetWidth /
+          document.documentElement.clientWidth /
           parseFloat(window.getComputedStyle(document.body).fontSize)
         );
       default:
@@ -60,7 +60,7 @@ export default ({ breakpoints = defaultBreakpoints, unit = 'px' } = {}) => {
   const setState = () => {
     const oldState = Object.assign({}, state); // Cache old state
 
-    const width = getWindowWidth(); // document.body.offsetWidth;
+    const width = getWindowWidth(); // document.documentElement.clientWidth;
     const matchingBreakpoints = breakpoints.filter(bp => width >= bp.minWidth);
 
     // Assign new state values
