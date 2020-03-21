@@ -43,11 +43,10 @@ export default ({ breakpoints = defaultBreakpoints, unit = 'px' } = {}) => {
   const getWindowWidth = () => {
     switch (unit) {
       case 'px':
-        return document.documentElement.clientWidth;
+        return window.innerWidth;
       case 'em':
         return (
-          document.documentElement.clientWidth /
-          parseFloat(window.getComputedStyle(document.body).fontSize)
+          window.innerWidth / parseFloat(window.getComputedStyle(document.body).fontSize)
         );
       default:
         throw new Error('Please provide either px or em as unit');
@@ -60,7 +59,7 @@ export default ({ breakpoints = defaultBreakpoints, unit = 'px' } = {}) => {
   const setState = () => {
     const oldState = Object.assign({}, state); // Cache old state
 
-    const width = getWindowWidth(); // document.documentElement.clientWidth;
+    const width = getWindowWidth();
     const matchingBreakpoints = breakpoints.filter(bp => width >= bp.minWidth);
 
     // Assign new state values

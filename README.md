@@ -188,6 +188,11 @@ Helpful Ressources:
 * https://www.youtube.com/watch?v=ImwrezYhw4w
 * https://www.youtube.com/watch?v=wfMtDGfHWpA
 
+## Caveats
+
+BreakpointManager is using `window.innerWidth` to read the width of the frame. This also means, if you have actual content that is 'wider' than 100% of your screen, the value of your BreakpointManager might not be correct, as it's not using `document.documentElement.clientWidth` which would read the correct value, but not incorporate the scrollbar in its calculation (which would result the BreakpointManager breakpoint of 768px to trigger at different widths than your CSS breakpoint at the same value).
+To avoid any problems, make sure you have `overflow-x: hidden` on your body, to avoid any overflow on the x-achsis, so `window.innerWidth` will always read the correct value.
+
 ## License
 
 Apache-2.0

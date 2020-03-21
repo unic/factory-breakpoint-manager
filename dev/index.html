@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="breakpoint"></div>
+
+  <style>
+    #breakpoint {
+      height: 200vh;
+      background: blue;
+    }
+
+    @media (min-width: 768px) {
+      #breakpoint {
+        background: red;
+      }
+    }
+  </style>
+
+  <script src="../dist/factory-breakpoint-manager.js"></script>
+  <script>
+    const createBreakpointManager = window['factory-breakpoint-manager'].default;
+
+    const BreakpointManager = createBreakpointManager({
+      breakpoints: {
+        xs: 0,
+        sm: 768,
+        md: 992,
+        lg: 1200,
+      },
+      unit: 'px'
+    });
+
+    const breakpoint = document.getElementById('breakpoint');
+
+    // Subscribe to a breakpoint change
+    const subscriptionId = BreakpointManager.on('change', () => {
+
+      // Read the current state of your BreakpointManager
+      const currentState = BreakpointManager.getState();
+      // console.log(currentState);
+
+      breakpoint.innerHTML = currentState.breakpoint.name;
+
+      // Check if the breakpoint is currently value x
+      if(BreakpointManager.matches('xs')) {
+        console.log('Window width is currently between 0px and 767px');
+      }
+
+      // Check if the breakpoint is currently value x or y...
+      if(BreakpointManager.matches(['xs', 'md', 'lg'])) {
+        console.log('Window is currently on xs/md or lg');
+      }
+
+      // Check if matches is false can also result in what you need
+      if(!BreakpointManager.matches('sm')) {
+        console.log("Same result as when given ['xs', 'md', 'lg'] and checkig if it was true");
+      }
+    });
+  </script>
+</body>
+</html>
